@@ -278,11 +278,11 @@ export default {
     return {
       tpConfig: {
         name: "defaultName1",
-        SA: "0",
-        TA: "0",
+        SA: "1",
+        TA: "2",
         RA: "0",
-        txId: "0",
-        rxId: "0",
+        txId: "784",
+        rxId: "7f0",
         MSGTYPE: 1,
         FORMAT: 1,
         IDTYPE: 1,
