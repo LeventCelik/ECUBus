@@ -1,13 +1,6 @@
 <template>
   <div>
     <el-dialog title="Create Project" :visible.sync="create" width="30%">
-      <!-- <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
-      </span> -->
       <el-form :model="createProInfo" label-width="80px" ref="createForm">
         <el-form-item label="Name" required prop="name">
           <el-input v-model="createProInfo.name"></el-input>
@@ -43,7 +36,7 @@
       <div class="tips_create">
         <el-alert
           show-icon
-          title="Please create or open a project firstly"
+          title="Please create or open a project first"
           :closable="false"
           type="info"
         >

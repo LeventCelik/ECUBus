@@ -43,7 +43,7 @@
           size="small"
           style="width: 100px"
         ></el-input-number>
-        <!-- <el-button @click="run" size="small" type="success" :disabled="!connected||running">开始</el-button> -->
+        <!-- <el-button @click="run" size="small" type="success" :disabled="!connected||running">Start</el-button> -->
       </el-col>
     </el-row>
     <Progress ref="prog" />

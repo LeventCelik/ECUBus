@@ -51,7 +51,7 @@ export default {
                 if(this.table[i].type=='group'){
                     this.$notify.error({
                         title: "Error",
-                        message: 'Remove group firstly.'
+                        message: 'Remove group first.'
                     });
                     return 
                 }

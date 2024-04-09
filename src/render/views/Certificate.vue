@@ -116,7 +116,7 @@ var lineLength = 50;
 export default {
   data() {
     return {
-      data: [],
+      data: ['No data'],
       defaultProps: {
         children: "children",
         label: "label",
@@ -140,8 +140,8 @@ export default {
     this.clipboard = new ClipboardJS(".copy-btn1");
     this.clipboard.on("success", () => {
       this.$notify({
-        title: "成功",
-        message: "复制成功",
+        title: "Success",
+        message: "Copied to clipboard",
         type: "success",
       });
     });

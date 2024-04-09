@@ -8,7 +8,7 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-select v-model="device" placeholder="Deivce" :disabled="connected" style="width:100%">
+        <el-select v-model="device" placeholder="Device" :disabled="connected" style="width:100%">
           <el-option
             v-for="item in deviceList"
             :key="item.value"
