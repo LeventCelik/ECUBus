@@ -277,7 +277,7 @@ export default {
   data: function() {
     return {
       tpConfig: {
-        name: "defaultName1",
+        name: "CAN",
         SA: "1",
         TA: "2",
         RA: "0",
