@@ -175,12 +175,8 @@ class CANUDS extends UDS {
                 break
               }
               if (this.checkFunc(this.writeData, msg.DATA)) {
-                if (this.udsTimer.hasRef()) {
-                  this.receive = true;
-                  this.info('User insert a new delay')
-                } else {
-                  this.step()
-                }
+                this.receive = true;
+                this.step()
               } else {
                 this.emit('udsError', {
                   msg: 'User defined function return false',
