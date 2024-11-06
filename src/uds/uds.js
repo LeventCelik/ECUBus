@@ -21,6 +21,9 @@ class UDS {
         }
         // this.hse = new HSE(loadPath);
     }
+
+    //Create channel to communicate to CAN reader?
+    //Needs a second look
     emit(channel, msg) {
         if (channel == 'udsError') {
             this.error(msg)
@@ -29,6 +32,8 @@ class UDS {
         }
         this.win.webContents.send(channel, msg)
     }
+
+    //Shows progress bar of a name 'main'
     progress(show, percent, name = 'main') {
         this.emit('progress', {
             name: name,
@@ -36,18 +41,24 @@ class UDS {
             percent: percent
         })
     }
+
+    //Set key to a value
+    //keep = false means this value will NOT be stored over different starts
     set(key, value, keep = false) {
         this.map[key] = value
         if (keep) {
             this.keeyMap[key] = value
         }
     }
+
+    //Gets key for 
     get(key) {
         if (key in this.map)
             return this.map[key]
         else if (key in this.keeyMap)
             return this.keeyMap[key]
         else
+            //No key found
             return null
     }
     verbose(msg) {

@@ -1,3 +1,4 @@
+//Import necessary modules
 import Vue from 'vue'
 import App from './render/App.vue'
 import router from './render/router'
@@ -9,6 +10,8 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript.js"
 import "codemirror/theme/eclipse.css";
 import CodeMirror from 'codemirror'
+
+
 CodeMirror.defineOption("fullScreen", false, function(cm, val, old){
   if (old == CodeMirror.Init) old = false;
   if (!old == !val) return;

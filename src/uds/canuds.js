@@ -4,6 +4,7 @@ const path = require('path')
 const sprintf = require('sprintf-js').sprintf
 const { ipcMain } = require('electron')
 const UDS = require('./uds.js')
+
 const ErrorText = {
   0: 'OK!',
   1: 'Timeout occured between 2 frames transmission',
@@ -14,6 +15,8 @@ const ErrorText = {
   6: 'Unexpected protocol data unit'
 }
 
+const NEGATIVE_RESPONSE_CODE = 0x7F;
+const RESPONSE_PENDING = 0x78;
 
 const PCANTP = require('./../../build/Release/PCANTP.node')
 // const  PCANTP = require(path.join(__static, 'PCANTP.node'))
@@ -28,6 +31,17 @@ class CANUDS extends UDS {
     this.udsTimer = setTimeout(() => { }, 0)
     this.receive = false
     clearTimeout(this.udsTimer)
+
+    /** 
+     * Connects to a specified CAN channel and initializes padding settings.
+     * @event canConnect
+     * @param {Event} event - The IPC event to respond to.
+     * @param {Array} arg - Contains channel, bitrate, and padding parameters.
+     *   - arg[0]: Channel number for CAN (e.g., PCANTP.PCANTP_USBBUS1).
+     *   - arg[1]: Bitrate for CAN communication.
+     *   - arg[2]: Padding option (true for padding on, false for none).
+     * @returns {Object} err - Error code and message from `cantp.Initialize`.
+     */
     ipcMain.on('canConnect', (event, arg) => {
       var err = this.cantp.Initialize(arg[0], arg[1])
       this.canfd = false
@@ -47,6 +61,8 @@ class CANUDS extends UDS {
         msg: this.cantp.GetErrorText(err)
       }
     })
+
+
     ipcMain.on('canConnectFd', (event, arg) => {
       var err = this.cantp.InitializeFd(arg[0], arg[1])
       this.canfd = true
@@ -73,6 +89,8 @@ class CANUDS extends UDS {
       }
 
     })
+
+
     ipcMain.on('canDisconnect', (event, arg) => {
       var err = this.cantp.Uninitialize(arg)
       event.returnValue = {
@@ -80,6 +98,8 @@ class CANUDS extends UDS {
         msg: this.cantp.GetErrorText(err)
       }
     })
+
+
     ipcMain.on('canAddMap', (event, arg) => {
       var ret = {}
       ret.err = this.cantp.AddMapping(this.channel, arg.txId, arg.rxId, arg.IDTYPE, arg.FORMAT, arg.MSGTYPE, arg.SA, arg.TA, arg.TA_TYPE, arg.RA)
@@ -91,6 +111,8 @@ class CANUDS extends UDS {
       }
       event.returnValue = ret
     })
+
+
     ipcMain.on('canDeleteMap', (event, arg) => {
       var ret = {}
       ret.err = this.cantp.RemoveMapping(this.channel, arg[0])
@@ -102,6 +124,8 @@ class CANUDS extends UDS {
       }
       event.returnValue = ret
     })
+
+
     ipcMain.on('canudsExcute', (event, arg) => {
       this.UDSstart(arg.udsTable)
       this.timeout = arg.timeout
@@ -109,6 +133,8 @@ class CANUDS extends UDS {
       this.addr = arg.addr
       this.step()
     })
+
+
   }
 
   delay(timeout) {
@@ -120,9 +146,13 @@ class CANUDS extends UDS {
       })
     }, t)
   }
+
+
   Unload() {
     this.cantp.Unload()
   }
+
+
   eventHandle() {
     var err
     var msg = {}
@@ -169,7 +199,7 @@ class CANUDS extends UDS {
             clearTimeout(this.udsTimer)
             // this.emit('udsData', sprintf("[data]:msg:%s.\r\n", msg.DATA.join(',')))
             try {
-              if ((msg.DATA[0] == 0x7F) && (msg.DATA[2] == 0x78)) {
+              if ((msg.DATA[0] == NEGATIVE_RESPONSE_CODE) && (msg.DATA[2] == RESPONSE_PENDING)) {
                 this.receive = true;
                 this.delay()
                 break
@@ -199,9 +229,13 @@ class CANUDS extends UDS {
       })
     }
   }
+
+
   registerCallback(fn) {
     this.cantp.RegCb(fn)
   }
+
+
   step() {
     try {
       var item = this.getNextService()
@@ -238,6 +272,8 @@ class CANUDS extends UDS {
       this.receive = !this.suppress
     }
   }
+
+
 }
 
 module.exports = CANUDS;

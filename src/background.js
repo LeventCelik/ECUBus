@@ -45,7 +45,7 @@ var menuTemplate = [
         label:'ECUBus',
         click: async () => {
           const { shell } = require('electron')
-          await shell.openExternal('https://github.com/frankie-zeng/ECUBus')
+          await shell.openExternal('https://github.com/LeventCelik/ECUBus')
         }
       }
     ]
@@ -66,6 +66,7 @@ var menuTemplate = [
 }];
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
+
 
 function createApiHelper () {
   // Create the browser window.
