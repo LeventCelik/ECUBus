@@ -33,14 +33,15 @@ class CANUDS extends UDS {
     clearTimeout(this.udsTimer)
 
     /** 
+     * FIXME: fix this 
      * Connects to a specified CAN channel and initializes padding settings.
      * @event canConnect
      * @param {Event} event - The IPC event to respond to.
      * @param {Array} arg - Contains channel, bitrate, and padding parameters.
-     *   - arg[0]: Channel number for CAN (e.g., PCANTP.PCANTP_USBBUS1).
+     *   - arg[0]: Channel number for CAN (like PCANTP.PCANTP_USBBUS1).
      *   - arg[1]: Bitrate for CAN communication.
-     *   - arg[2]: Padding option (true for padding on, false for none).
-     * @returns {Object} err - Error code and message from `cantp.Initialize`.
+     *   - arg[2]: Padding option - not sure about this exactly
+     * @returns {Object} err - Error code and message
      */
     ipcMain.on('canConnect', (event, arg) => {
       var err = this.cantp.Initialize(arg[0], arg[1])
@@ -62,7 +63,7 @@ class CANUDS extends UDS {
       }
     })
 
-
+    //TODO: Event comments for the rest
     ipcMain.on('canConnectFd', (event, arg) => {
       var err = this.cantp.InitializeFd(arg[0], arg[1])
       this.canfd = true
