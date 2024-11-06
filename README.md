@@ -5,6 +5,9 @@
 
 ![2](https://user-images.githubusercontent.com/43364599/227956355-130a51fa-c9dd-440d-82a5-e557f7a3adfa.png)
 
+# Upkeep
+This repo has been forked by LeventCelik and coolguycaden to update and upkeep this repo for usage by as apart of a research project.
+
 # Real use case with NXP S32K1/S32K3 UDS bootloader
 https://community.nxp.com/t5/S32K-Knowledge-Base/Unified-bootloader-Demo/ta-p/1423099
 
